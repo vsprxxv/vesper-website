@@ -137,4 +137,3 @@ export default function StreamPage() {
     </div>
   )
 }
-```
