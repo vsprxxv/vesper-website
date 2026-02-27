@@ -25,7 +25,7 @@ export default function Home() {
       <div className="relative">
         <div className="w-full h-[600px] relative overflow-hidden">
           <img 
-            src="/vesper-hero.jpg" 
+            src="/vesper-hero.png"
             alt="Vesper livestream" 
             className="w-full h-full object-cover"
           />
