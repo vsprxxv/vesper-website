@@ -40,32 +40,29 @@ export default function StreamPage() {
           
           {/* Left: Video Player (2/3 width on desktop) */}
           <div className="lg:col-span-2">
-            <div className="bg-vesper-dark/90 rounded-lg overflow-hidden aspect-video flex items-center justify-center">
-              {/* Placeholder - replace with actual YouTube/pump.fun embed later */}
-              <div className="text-center p-8">
-                <div className="text-vesper-pale mb-4">
-                  <svg className="w-24 h-24 mx-auto opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                          d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} 
-                          d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <p className="text-vesper-pale/70 mb-2">24-Hour Livestream</p>
-                <p className="text-vesper-grey/50 text-sm">Stream will be embedded here when live</p>
-              </div>
+            <div className="aspect-video rounded-lg overflow-hidden bg-black">
+              <iframe
+                src="https://www.youtube.com/embed/NhNTLJG_qYg?autoplay=1&mute=0"
+                className="w-full h-full"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
             </div>
 
             {/* Watch on links */}
             <div className="flex gap-4 mt-4 text-sm">
               <a 
-                href="#" 
+                href="https://youtube.com/live/NhNTLJG_qYg" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-vesper-blue hover:text-vesper-navy transition-colors"
               >
                 → Watch on YouTube
               </a>
               <a 
-                href="#" 
+                href="https://pump.fun" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-vesper-blue hover:text-vesper-navy transition-colors"
               >
                 → Watch on pump.fun
@@ -140,3 +137,4 @@ export default function StreamPage() {
     </div>
   )
 }
+```
