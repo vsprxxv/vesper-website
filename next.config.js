@@ -1,13 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   serverExternalPackages: [
-    'pino',
-    'thread-stream',
-    '@libsql/hrana-client',
-    'drizzle-orm',
-    '@uploadthing/*',
-    // Add more if you discover other problematic deps later
-  ],
+    '@libsql/hrana-client'  // Prevents bundler from tracing/parsing its LICENSE + other files
+  ]
 };
 
 export default nextConfig;
