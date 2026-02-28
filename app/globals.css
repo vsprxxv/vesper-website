@@ -1,8 +1,8 @@
+/* Tailwind disabled for build test */
 /* @tailwind base; */
 /* @tailwind components; */
 /* @tailwind utilities; */
 
-/* Keep any custom styles you have, or add simple ones */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -10,6 +10,14 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: system-ui, sans-serif;
   line-height: 1.5;
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
