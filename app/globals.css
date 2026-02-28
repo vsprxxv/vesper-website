@@ -2,7 +2,14 @@
 /* @tailwind components; */
 /* @tailwind utilities; */
 
-body {
+/* Keep any custom styles you have, or add simple ones */
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+body {
   font-family: sans-serif;
+  line-height: 1.5;
 }
