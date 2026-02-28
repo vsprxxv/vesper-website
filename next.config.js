@@ -1,19 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your existing config...
   serverExternalPackages: [
-    'pino',                // common culprit
+    'pino',
     'thread-stream',
-    '@libsql/hrana-client', // if using drizzle/libsql
-    'drizzle-orm',         // if using it
-    '@uploadthing/*',      // if using uploadthing
-    // Add any other suspicious package names here
+    '@libsql/hrana-client',
+    'drizzle-orm',
+    '@uploadthing/*',
+    // Add more if you discover other problematic deps later
   ],
-};
-  experimental: {
-    esmExternals: false,  // This fixes many ESM/CommonJS interop issues during webpack builds
-  },
-  // Add any other settings here later if needed
 };
 
 export default nextConfig;
