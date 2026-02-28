@@ -22,6 +22,14 @@ export async function POST(request) {
         'Authorization': `Bearer ${grokKey}`,
         'Content-Type': 'application/json'
       },
+      if (!grokRes.ok) {
+  const errorText = await grokRes.text();  // Get raw error body safely
+  console.error('xAI API failed:', grokRes.status, errorText);  // This logs to Vercel
+  return NextResponse.json(
+    { error: `xAI error: ${grokRes.status} - ${errorText || 'No details'}` },
+    { status: grokRes.status }
+  );
+}
       body: JSON.stringify({
         model: 'grok-4-1-fast-reasoning',
         messages: [
