@@ -19,7 +19,9 @@ export async function POST(request) {
 
     // Get API key from environment variables
     const grokKey = process.env.GROK_API_KEY;
-
+console.log('DEBUG - GROK_API_KEY exists?', !!grokKey);
+console.log('DEBUG - Key length:', grokKey ? grokKey.length : 'missing');
+console.log('DEBUG - All env var names:', Object.keys(process.env).sort().join(', '));
     if (!grokKey) {
       return NextResponse.json({ error: 'Server configuration error: API key missing' }, { status: 500 });
     }
