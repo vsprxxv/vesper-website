@@ -1,10 +1,52 @@
 import { NextResponse } from 'next/server';
+import { createHmac } from 'crypto';
 
-export const runtime = 'edge';
+async function postToTwitter(text) {
+  const consumerKey = process.env.TWITTER_CONSUMER_KEY;
+  const consumerSecret = process.env.TWITTER_CONSUMER_SECRET;
+  const accessToken = process.env.TWITTER_ACCESS_TOKEN;
+  const accessTokenSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET;
+
+  const url = 'https://api.twitter.com/2/tweets';
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const nonce = Math.random().toString(36).substring(2);
+
+  const params = {
+    oauth_consumer_key: consumerKey,
+    oauth_nonce: nonce,
+    oauth_signature_method: 'HMAC-SHA1',
+    oauth_timestamp: timestamp,
+    oauth_token: accessToken,
+    oauth_version: '1.0',
+  };
+
+  const paramString = Object.keys(params).sort()
+    .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
+    .join('&');
+  const baseString = `POST&${encodeURIComponent(url)}&${encodeURIComponent(paramString)}`;
+  const signingKey = `${encodeURIComponent(consumerSecret)}&${encodeURIComponent(accessTokenSecret)}`;
+  const signature = createHmac('sha1', signingKey).update(baseString).digest('base64');
+
+  const authHeader = 'OAuth ' + 
+    Object.keys(params).sort()
+      .map(k => `${encodeURIComponent(k)}="${encodeURIComponent(params[k])}"`)
+      .join(', ') + 
+    `, oauth_signature="${encodeURIComponent(signature)}"`;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Authorization': authHeader,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ text }),
+  });
+
+  return res;
+}
 
 export async function POST(request) {
   try {
-    // Parse the incoming JSON body
     let prayer;
     try {
       ({ prayer } = await request.json());
@@ -12,21 +54,16 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
 
-    // Basic validation
     if (!prayer || typeof prayer !== 'string' || prayer.trim() === '') {
       return NextResponse.json({ error: 'Prayer text is required' }, { status: 400 });
     }
 
-    // Get API key from environment variables
-    const grokKey = process.env.GROK_API_KEY;
-console.log('DEBUG - GROK_API_KEY exists?', !!grokKey);
-console.log('DEBUG - Key length:', grokKey ? grokKey.length : 'missing');
-console.log('DEBUG - All env var names:', Object.keys(process.env).sort().join(', '));
+    const grokKey = process.env.XAI_API_KEY;
     if (!grokKey) {
-      return NextResponse.json({ error: 'Server configuration error: API key missing' }, { status: 500 });
+      return NextResponse.json({ error: 'API key missing' }, { status: 500 });
     }
 
-    // Call xAI / Grok API
+    // Transform with Grok
     const grokRes = await fetch('https://api.x.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -34,11 +71,11 @@ console.log('DEBUG - All env var names:', Object.keys(process.env).sort().join('
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'grok-4-1-fast-reasoning',  // Change to 'grok-beta' or 'grok-3' if this model isn't available
+        model: 'grok-3-mini',
         messages: [
           {
             role: 'system',
-            content: 'Transform prayers into spare, luminous Hemingway/Dillard style. Short sentences. Remove desperation. Add grace. Output only the transformed prayer.'
+            content: 'Transform this prayer into spare, luminous prose in the style of Hemingway and Annie Dillard combined. Short sentences. Remove desperation. Add grace and wonder. Keep it under 200 characters. Output only the transformed prayer, nothing else.'
           },
           {
             role: 'user',
@@ -46,28 +83,28 @@ console.log('DEBUG - All env var names:', Object.keys(process.env).sort().join('
           }
         ],
         temperature: 0.7,
-        max_tokens: 180  // Prevent overly long responses
+        max_tokens: 100
       })
     });
 
-    // Handle non-200 responses safely
     if (!grokRes.ok) {
-      const errorText = await grokRes.text();  // Use .text() to avoid JSON parse crash on error bodies
-      console.error('xAI API failed:', grokRes.status, errorText);
-      return NextResponse.json(
-        { error: `xAI API error (${grokRes.status}): ${errorText.slice(0, 300)}` },
-        { status: 502 }
-      );
+      const errorText = await grokRes.text();
+      console.error('Grok error:', grokRes.status, errorText);
+      return NextResponse.json({ error: `xAI API error: ${errorText.slice(0, 300)}` }, { status: 502 });
     }
 
-    // Parse successful response
     const grokData = await grokRes.json();
-
-    if (!grokData?.choices?.[0]?.message?.content) {
-      return NextResponse.json({ error: 'Invalid response from AI' }, { status: 500 });
-    }
-
     const transformed = grokData.choices[0].message.content.trim();
+    console.log('Transformed prayer:', transformed);
+
+    // Post to Twitter
+    const twitterRes = await postToTwitter(transformed);
+    if (!twitterRes.ok) {
+      const twitterError = await twitterRes.text();
+      console.error('Twitter post failed:', twitterError);
+    } else {
+      console.log('Posted to Twitter successfully!');
+    }
 
     return NextResponse.json({
       success: true,

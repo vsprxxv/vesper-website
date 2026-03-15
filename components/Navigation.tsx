@@ -2,73 +2,71 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import Image from 'next/image'
 
 export default function Navigation() {
+  const [aboutOpen, setAboutOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const links = [
-    { href: '/pray', label: 'Pray' },
-    { href: '/archive', label: 'Archive' },
-    { href: '/stream', label: 'Stream' },
-    { href: '/token', label: 'Token' },
-    { href: '/about', label: 'About' },
-  ]
-
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-vesper-white/80 backdrop-blur-md border-b border-vesper-pale">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Wordmark */}
-          <Link href="/" className="font-display text-2xl font-semibold text-vesper-navy">
-            VESPER
-          </Link>
+    <nav style={{ 
+      position: 'fixed', 
+      top: 0, 
+      left: 0, 
+      right: 0, 
+      zIndex: 50, 
+      backgroundColor: 'white', 
+      borderBottom: '1px solid #e5e7eb',
+      fontFamily: 'Helvetica, Arial, sans-serif'
+    }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '64px' }}>
+          
+          {/* Logo */}
+          <Link href="/" style={{ textDecoration: 'none' }}>
+  <p style={{
+    fontFamily: 'Helvetica, Arial, sans-serif',
+    fontSize: '18px',
+    letterSpacing: '6px',
+    color: '#9ca3af',
+    textShadow: '0 0 8px rgba(150, 150, 150, 0.8), 0 0 20px rgba(150, 150, 150, 0.4)',
+  }}>
+    VESPER
+  </p>
+</Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-vesper-dark hover:text-vesper-blue transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-vesper-dark"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          {/* Nav Links */}
+          <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
+            
+            {/* About Dropdown */}
+            <div style={{ position: 'relative' }}
+              onMouseEnter={() => setAboutOpen(true)}
+              onMouseLeave={() => setAboutOpen(false)}
+            >
+              <button style={{ color: '#6b7280', background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px' }}>
+                About
+              </button>
+              {aboutOpen && (
+                <div style={{ position: 'absolute', right: 0, top: '100%', backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '4px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', width: '160px', zIndex: 100 }}>
+                  <Link href="/about/whitepaper" style={{ display: 'block', padding: '8px 16px', color: '#6b7280', textDecoration: 'none', fontSize: '12px' }}>
+                    White Paper
+                  </Link>
+                  <Link href="/archive" style={{ display: 'block', padding: '8px 16px', color: '#6b7280', textDecoration: 'none', fontSize: '12px' }}>
+                    Archive
+                  </Link>
+                  <Link href="/about/information" style={{ display: 'block', padding: '8px 16px', color: '#6b7280', textDecoration: 'none', fontSize: '12px' }}>
+                    Information
+                  </Link>
+                </div>
               )}
-            </svg>
-          </button>
+            </div>
+
+            <Link href="/pray" style={{ color: '#6b7280', textDecoration: 'none', fontSize: '13px' }}>Pray</Link>
+<Link href="/stream" style={{ color: '#6b7280', textDecoration: 'none', fontSize: '13px' }}>Stream</Link>
+<Link href="/token" style={{ color: '#6b7280', textDecoration: 'none', fontSize: '13px' }}>Token</Link>
+          </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-vesper-pale bg-vesper-white">
-          <div className="px-4 py-4 space-y-3">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block text-vesper-dark hover:text-vesper-blue transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
     </nav>
   )
 }

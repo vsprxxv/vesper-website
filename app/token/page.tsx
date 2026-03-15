@@ -1,124 +1,86 @@
+import React from 'react'
+
 export default function TokenPage() {
   return (
-    <div className="pt-32 pb-24 px-4 min-h-screen bg-gradient-to-b from-vesper-white to-vesper-mist">
-      <div className="max-w-4xl mx-auto">
-        
-        <div className="text-center mb-16">
-          <h1 className="font-display text-5xl md:text-6xl text-vesper-navy mb-6">
-            Community Token
-          </h1>
-          <p className="text-xl text-vesper-grey max-w-2xl mx-auto">
-            Become a steward of Vesper
-          </p>
+    <div style={{ paddingTop: '96px', paddingBottom: '96px', paddingLeft: '24px', paddingRight: '24px', minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: 'Helvetica, Arial, sans-serif' }}>
+      <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+
+        <h1 style={{ fontSize: '28px', fontWeight: 'bold', color: '#6b7280', letterSpacing: '4px', marginBottom: '8px', textAlign: 'center' }}>
+          VSPR
+        </h1>
+        <p style={{ color: '#9ca3af', fontSize: '15px', textAlign: 'center', letterSpacing: '2px', marginBottom: '16px' }}>
+          A Community Token
+        </p>
+        <p style={{ color: '#9ca3af', fontSize: '15px', textAlign: 'center', marginBottom: '48px' }}>
+          Become a steward of Vesper.
+        </p>
+
+        <div style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#6b7280', marginBottom: '16px', letterSpacing: '2px' }}>What is Vesper Stewardship?</h2>
+          <p style={{ color: '#9ca3af', lineHeight: '1.9', fontSize: '15px', textAlign: 'justify' }}>The VSPR token is a sign of care. It marks those who stand watch over Vesper — a living artwork that moves like water and light. Holding the token is not ownership. It is a quiet vow to tend the work: the stream that never stops, the growing archive of prayers, the places where word meets stone, and the direction this creation will take next.</p>
+          <p style={{ color: '#9ca3af', lineHeight: '1.9', fontSize: '15px', textAlign: 'justify', marginTop: '16px' }}>You are not buying prayers. You are keeping watch over what endures — a public well of spirit, written forever.</p>
         </div>
 
-        <section className="mb-16">
-          <h2 className="font-display text-3xl text-vesper-navy mb-6">
-            What is Vesper Stewardship?
-          </h2>
-          <div className="space-y-4 text-vesper-dark leading-relaxed">
-            <p>
-              The VSPR token represents collective stewardship of Vesper as a living artwork. 
-              Token holders do not own individual prayers. Instead, token holders hold a stake 
-              in the artwork itself: the 24-hour stream, the growing prayer archive, the physical 
-              installations, and the ongoing creative direction of the project.
-            </p>
-            <p>
-              You are not buying prayers. You are becoming a guardian of a permanent, public, 
-              spiritual archive.
-            </p>
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <div className="bg-white/40 backdrop-blur-sm border border-vesper-pale rounded-lg p-8">
-            <h3 className="font-display text-2xl text-vesper-navy mb-6">Token Details</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <div className="text-sm text-vesper-grey mb-1">Name</div>
-                <div className="text-lg font-semibold text-vesper-dark">VESPER</div>
-              </div>
-              <div>
-                <div className="text-sm text-vesper-grey mb-1">Symbol</div>
-                <div className="text-lg font-semibold text-vesper-dark">VSPR</div>
-              </div>
-              <div>
-                <div className="text-sm text-vesper-grey mb-1">Total Supply</div>
-                <div className="text-lg font-semibold text-vesper-dark">999,999</div>
-                <div className="text-xs text-vesper-grey mt-1">Angel number — fixed supply</div>
-              </div>
-              <div>
-                <div className="text-sm text-vesper-grey mb-1">Blockchain</div>
-                <div className="text-lg font-semibold text-vesper-dark">Solana</div>
-              </div>
+        <div style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#6b7280', marginBottom: '16px', letterSpacing: '2px' }}>Token Details</h2>
+          <div style={{ border: '1px solid #e5e7eb', borderRadius: '4px', padding: '32px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div>
+              <div style={{ fontSize: '13px', color: '#d1d5db', marginBottom: '6px' }}>Name</div>
+              <div style={{ fontSize: '16px', color: '#6b7280', fontWeight: '600' }}>VESPER</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '13px', color: '#d1d5db', marginBottom: '6px' }}>Symbol</div>
+              <div style={{ fontSize: '16px', color: '#6b7280', fontWeight: '600' }}>VSPR</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '13px', color: '#d1d5db', marginBottom: '6px' }}>Total Supply</div>
+              <div style={{ fontSize: '16px', color: '#6b7280', fontWeight: '600' }}>1,000,000.000</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '13px', color: '#d1d5db', marginBottom: '6px' }}>Blockchain</div>
+              <div style={{ fontSize: '16px', color: '#6b7280', fontWeight: '600' }}>Solana</div>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section className="mb-16">
-          <div className="bg-vesper-blue/10 border-l-4 border-vesper-blue rounded-r-lg p-8">
-            <h3 className="font-display text-2xl text-vesper-navy mb-4">The Principle</h3>
-            <p className="font-display italic text-xl text-vesper-dark leading-relaxed">
-              The prayers of Vesper are not for sale. They are stored permanently on the Solana 
-              blockchain as a public archive. The community token represents stewardship of the 
-              artwork, not ownership of its prayers.
-            </p>
-          </div>
-        </section>
+        <div style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#6b7280', marginBottom: '16px', letterSpacing: '2px' }}>The Principle</h2>
+          <p style={{ color: '#9ca3af', lineHeight: '1.9', fontSize: '15px', textAlign: 'justify' }}>The prayers of Vesper are not for sale. They live on the Solana chain, permanent and visible to all. The token does not own them; it keeps faith with them. To hold is eternal stewardship.</p>
+        </div>
 
-        <section>
-          <h2 className="font-display text-3xl text-vesper-navy mb-6">
-            How to Get VSPR
-          </h2>
-          <div className="space-y-6">
-            
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-vesper-blue text-white rounded-full flex items-center justify-center font-semibold">
-                1
-              </div>
+        <div style={{ marginBottom: '40px' }}>
+          <h2 style={{ fontSize: '16px', fontWeight: 'bold', color: '#6b7280', marginBottom: '16px', letterSpacing: '2px' }}>How to Get VSPR</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ flexShrink: 0, width: '32px', height: '32px', backgroundColor: '#e5e7eb', color: '#6b7280', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px' }}>1</div>
               <div>
-                <h4 className="font-semibold text-vesper-dark mb-2">Get a Solana Wallet</h4>
-                <p className="text-vesper-grey">
-                  Download Phantom or another Solana wallet. Create a new wallet and save your recovery phrase.
-                </p>
+                <p style={{ fontWeight: '600', color: '#6b7280', fontSize: '14px', marginBottom: '4px' }}>Get a Solana Wallet</p>
+                <p style={{ color: '#9ca3af', fontSize: '14px', lineHeight: '1.8' }}>Download Phantom or another Solana wallet. Create a new wallet and save your recovery phrase.</p>
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-vesper-blue text-white rounded-full flex items-center justify-center font-semibold">
-                2
-              </div>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ flexShrink: 0, width: '32px', height: '32px', backgroundColor: '#e5e7eb', color: '#6b7280', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px' }}>2</div>
               <div>
-                <h4 className="font-semibold text-vesper-dark mb-2">Fund Your Wallet with SOL</h4>
-                <p className="text-vesper-grey">
-                  Buy SOL on an exchange like Coinbase, then send it to your Phantom wallet address.
-                </p>
+                <p style={{ fontWeight: '600', color: '#6b7280', fontSize: '14px', marginBottom: '4px' }}>Fund Your Wallet with SOL</p>
+                <p style={{ color: '#9ca3af', fontSize: '14px', lineHeight: '1.8' }}>Buy SOL on an exchange like Coinbase, then send it to your Phantom wallet address.</p>
               </div>
             </div>
 
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 bg-vesper-blue text-white rounded-full flex items-center justify-center font-semibold">
-                3
-              </div>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ flexShrink: 0, width: '32px', height: '32px', backgroundColor: '#e5e7eb', color: '#6b7280', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px' }}>3</div>
               <div>
-                <h4 className="font-semibold text-vesper-dark mb-2">Go to pump.fun</h4>
-                <p className="text-vesper-grey mb-3">
-                  Visit pump.fun and connect your wallet. Search for VESPER or paste the contract address.
-                </p>
-                
-                <a
-                  href="https://pump.fun"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block px-6 py-3 bg-vesper-blue text-white rounded-lg hover:bg-vesper-navy transition-colors"
-                >
-                  Buy VSPR on pump.fun
+                <p style={{ fontWeight: '600', color: '#6b7280', fontSize: '14px', marginBottom: '4px' }}>Go to pump.fun</p>
+                <p style={{ color: '#9ca3af', fontSize: '14px', lineHeight: '1.8', marginBottom: '12px' }}>Visit pump.fun and connect your wallet. Search for VESPER or paste the contract address.</p>
+                <a href="https://pump.fun" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '10px 24px', border: '1px solid #e5e7eb', color: '#9ca3af', borderRadius: '4px', textDecoration: 'none', fontSize: '13px', letterSpacing: '1px' }}>
+                  Buy VSPR on pump.fun →
                 </a>
               </div>
             </div>
 
           </div>
-        </section>
+        </div>
 
       </div>
     </div>
