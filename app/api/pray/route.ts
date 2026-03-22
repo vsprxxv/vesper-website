@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
 import { createHmac } from 'crypto';
 async function postToTwitter(text: string): Promise<Response> {
-async function postToTwitter(text: string) {
-  const consumerKey = process.env.TWITTER_CONSUMER_KEY;
-  const consumerSecret = process.env.TWITTER_CONSUMER_SECRET;
-  const accessToken = process.env.TWITTER_ACCESS_TOKEN;
-  const accessTokenSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET;
+  const consumerKey = process.env.TWITTER_CONSUMER_KEY as string;
+  const consumerSecret = process.env.TWITTER_CONSUMER_SECRET as string;
+  const accessToken = process.env.TWITTER_ACCESS_TOKEN as string;
+  const accessTokenSecret = process.env.TWITTER_ACCESS_TOKEN_SECRET as string;
 
   const url = 'https://api.twitter.com/2/tweets';
   const timestamp = Math.floor(Date.now() / 1000).toString();
