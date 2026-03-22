@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createHmac } from 'crypto';
-
+async function postToTwitter(text: string): Promise<Response> {
 async function postToTwitter(text: string) {
   const consumerKey = process.env.TWITTER_CONSUMER_KEY;
   const consumerSecret = process.env.TWITTER_CONSUMER_SECRET;
