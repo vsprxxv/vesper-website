@@ -44,7 +44,7 @@ async function postToTwitter(text: string): Promise<Response> {
   return res;
 }
 
-export async function POST(request) {
+export async function POST(request: Request) {
   try {
     let prayer;
     try {
