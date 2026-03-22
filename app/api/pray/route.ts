@@ -11,7 +11,7 @@ async function postToTwitter(text: string) {
   const timestamp = Math.floor(Date.now() / 1000).toString();
   const nonce = Math.random().toString(36).substring(2);
 
-  const params = {
+  const params: Record<string, string> = {
     oauth_consumer_key: consumerKey,
     oauth_nonce: nonce,
     oauth_signature_method: 'HMAC-SHA1',
