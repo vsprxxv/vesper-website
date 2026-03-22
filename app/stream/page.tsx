@@ -24,7 +24,7 @@ export default function StreamPage() {
         {/* Video */}
         <div style={{ width: '100%', aspectRatio: '16/9', backgroundColor: '#000', borderRadius: '4px', overflow: 'hidden', marginBottom: '16px' }}>
           <iframe
-            src="https://www.youtube.com/embed/NhNTLJG_qYg?autoplay=1&mute=0"
+            src="https://www.youtube.com/embed/u_-B8McgXiM?autoplay=1&mute=0"
             style={{ width: '100%', height: '100%', border: 'none' }}
             allow="autoplay; encrypted-media"
             allowFullScreen
@@ -33,7 +33,7 @@ export default function StreamPage() {
 
         {/* Watch links */}
         <div style={{ display: 'flex', gap: '24px', marginBottom: '64px' }}>
-          <a href="https://youtube.com/live/NhNTLJG_qYg" target="_blank" rel="noopener noreferrer"
+          <a href="https://youtube.com/live/u_-B8McgXiM" target="_blank" rel="noopener noreferrer"
             style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}>
             → Watch on YouTube
           </a>
