@@ -36,7 +36,7 @@ export default function Footer() {
         <div>
           <h3 style={{ fontWeight: '600', color: '#6b7280', marginBottom: '12px' }}>Connect</h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <a href="https://x.com/vesper" target="_blank" rel="noopener noreferrer" 
+            <a href="https://x.com/vsprxxv" target="_blank" rel="noopener noreferrer" 
               style={{ fontSize: '14px', color: '#9ca3af', textDecoration: 'none' }}>
               X.com / Twitter
             </a>
