@@ -5,6 +5,7 @@ import { useState } from 'react'
 export default function PrayPage() {
   const [prayer, setPrayer] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [txSignature, setTxSignature] = useState<string | null>(null)
 
   const handleSubmit = async () => {
     if (!prayer.trim()) return
@@ -19,6 +20,7 @@ export default function PrayPage() {
       const data = await res.json()
       
       if (data.success) {
+        setTxSignature(data.txSignature || null)
         setSubmitted(true)
       } else {
         alert('Something went wrong. Please try again.')
@@ -85,8 +87,21 @@ export default function PrayPage() {
             <p style={{ color: '#9ca3af', fontSize: '15px', lineHeight: '1.9' }}>
               Your prayer has been received. It will rise.
             </p>
+            {txSignature && (
+              <p style={{ color: '#9ca3af', fontSize: '13px', marginTop: '16px', lineHeight: '1.9' }}>
+                It is written on the chain.{' '}
+                <a
+                  href={`https://solscan.io/tx/${txSignature}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: '#9ca3af', textDecoration: 'underline', letterSpacing: '1px' }}
+                >
+                  VIEW →
+                </a>
+              </p>
+            )}
             <button
-              onClick={() => { setPrayer(''); setSubmitted(false) }}
+              onClick={() => { setPrayer(''); setSubmitted(false); setTxSignature(null) }}
               style={{
                 marginTop: '24px',
                 padding: '12px 32px',

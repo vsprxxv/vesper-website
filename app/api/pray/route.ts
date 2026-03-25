@@ -1,5 +1,40 @@
 import { NextResponse } from 'next/server';
 import { createHmac } from 'crypto';
+import { Connection, Keypair, Transaction, TransactionInstruction, PublicKey } from '@solana/web3.js';
+import bs58 from 'bs58';
+
+// Solana setup
+const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');
+const connection = new Connection(
+  process.env.SOLANA_RPC_URL || 'https://api.mainnet-beta.solana.com',
+  'confirmed'
+);
+
+async function recordOnChain(text: string): Promise<string | null> {
+  try {
+    const raw = process.env.SOLANA_PRAYER_WALLET_KEY!;
+    const keypair = Keypair.fromSecretKey(bs58.decode(raw));
+    const memo = `VSPR: ${text}`.substring(0, 566);
+    const tx = new Transaction().add(
+      new TransactionInstruction({
+        keys: [{ pubkey: keypair.publicKey, isSigner: true, isWritable: false }],
+        programId: MEMO_PROGRAM_ID,
+        data: Buffer.from(memo, 'utf-8'),
+      })
+    );
+    const { blockhash } = await connection.getLatestBlockhash();
+    tx.recentBlockhash = blockhash;
+    tx.feePayer = keypair.publicKey;
+    tx.sign(keypair);
+    const sig = await connection.sendRawTransaction(tx.serialize());
+    console.log('On-chain:', sig);
+    return sig;
+  } catch (err) {
+    console.error('Solana error:', err);
+    return null;
+  }
+}
+
 async function postToTwitter(text: string): Promise<Response> {
   const consumerKey = process.env.TWITTER_CONSUMER_KEY as string;
   const consumerSecret = process.env.TWITTER_CONSUMER_SECRET as string;
@@ -26,10 +61,10 @@ async function postToTwitter(text: string): Promise<Response> {
   const signingKey = `${encodeURIComponent(consumerSecret)}&${encodeURIComponent(accessTokenSecret)}`;
   const signature = createHmac('sha1', signingKey).update(baseString).digest('base64');
 
-  const authHeader = 'OAuth ' + 
+  const authHeader = 'OAuth ' +
     Object.keys(params).sort()
       .map(k => `${encodeURIComponent(k)}="${encodeURIComponent(params[k])}"`)
-      .join(', ') + 
+      .join(', ') +
     `, oauth_signature="${encodeURIComponent(signature)}"`;
 
   const res = await fetch(url, {
@@ -96,8 +131,12 @@ export async function POST(request: Request) {
     const transformed = grokData.choices[0].message.content.trim();
     console.log('Transformed prayer:', transformed);
 
-    // Post to Twitter
-    const twitterRes = await postToTwitter(transformed);
+    // Post to Twitter and record on Solana in parallel
+    const [twitterRes, txSignature] = await Promise.all([
+      postToTwitter(transformed),
+      recordOnChain(transformed),
+    ]);
+
     if (!twitterRes.ok) {
       const twitterError = await twitterRes.text();
       console.error('Twitter post failed:', twitterError);
@@ -107,7 +146,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      transformedPrayer: transformed
+      transformedPrayer: transformed,
+      txSignature,
     });
 
   } catch (err) {
