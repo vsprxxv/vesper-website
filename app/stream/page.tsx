@@ -26,14 +26,14 @@ export default function StreamPage() {
         </p>
         <div style={{ width: '100%', aspectRatio: '16/9', backgroundColor: '#000', borderRadius: '4px', overflow: 'hidden', marginBottom: '16px' }}>
           <iframe
-            src="https://www.youtube.com/embed/t1uDiwwIy10?autoplay=1&mute=0"
+            src="https://www.youtube.com/embed/live_stream?channel=UCxide7IyHCvYuTuL_c2AzWA&autoplay=1&mute=0"
             style={{ width: '100%', height: '100%', border: 'none' }}
             allow="autoplay; encrypted-media"
             allowFullScreen
           />
         </div>
         <div style={{ display: 'flex', gap: '24px', marginBottom: '64px' }}>
-          <a href="https://youtube.com/live/t1uDiwwIy10" target="_blank" rel="noopener noreferrer"
+          <a href="https://www.youtube.com/channel/UCxide7IyHCvYuTuL_c2AzWA/live" target="_blank" rel="noopener noreferrer"
             style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}>
             → Watch on YouTube
           </a>
