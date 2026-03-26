@@ -81,9 +81,9 @@ async function postToTwitter(text: string): Promise<Response> {
 
 export async function POST(request: Request) {
   try {
-    let prayer;
+    let prayer, handle;
     try {
-      ({ prayer } = await request.json());
+      ({ prayer, handle } = await request.json());
     } catch (e) {
       return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
@@ -131,9 +131,11 @@ export async function POST(request: Request) {
     const transformed = grokData.choices[0].message.content.trim();
     console.log('Transformed prayer:', transformed);
 
+    const tweetText = handle ? `${transformed} — ${handle}` : transformed;
+
     // Post to Twitter and record on Solana in parallel
     const [twitterRes, txSignature] = await Promise.all([
-      postToTwitter(transformed),
+      postToTwitter(tweetText),
       recordOnChain(transformed),
     ]);
 
