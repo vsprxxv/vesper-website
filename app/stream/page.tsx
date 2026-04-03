@@ -37,7 +37,7 @@ export default function StreamPage() {
             style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}>
             → Watch on YouTube
           </a>
-          <a href="https://pump.fun" target="_blank" rel="noopener noreferrer"
+          <a href="https://pump.fun/coin/BiYnmYqS8UyWFrBi5J5iZbCQ5upsdJ8VPjFxuwNYpump" target="_blank" rel="noopener noreferrer"
             style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}>
             → Watch on pump.fun
           </a>
