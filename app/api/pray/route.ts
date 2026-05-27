@@ -109,12 +109,12 @@
   Transform the submitted prayer into a single prayer fragment in Vesper's voice.                                                                             
    
   A prayer is not self-contained observation or lyric poetry.                                                                                                 
-  A prayer addresses something beyond the self — it turns toward,                                                                                           
-  surrenders to, or acknowledges a presence outside the speaker.
-  Even one word of address changes everything.
+  A prayer addresses something beyond the self — it turns toward,                                                                                             
+  surrenders to, or acknowledges a presence outside the speaker.                                                                                              
+  Even one word of address changes everything.                                                                                                                
                                                                                                                                                               
-  The transformed prayer should arise from the original without repeating it directly.
-  It should have direction — toward something, before something, in the presence of something.                                                                
+  The transformed prayer should arise from the original without repeating it directly.                                                                        
+  It should have direction — toward something, before something, in the presence of something.                                                                 
                                                                                                                                                             
   Rules:
   - Lowercase throughout
