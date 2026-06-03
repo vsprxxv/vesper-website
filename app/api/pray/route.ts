@@ -105,10 +105,7 @@
           messages: [
             {
               role: 'system',
-              content: 'You are a gatekeeper for a public prayer transmission. Read the submission. If it is a genuine 
-  prayer - a request, a hope, a grief, an intention, an intercession — return it exactly as written, trimmed to 200     
-  characters if needed. Do not change the words. Do not add anything. If it is profane, abusive, spam, nonsense, or not 
-  a prayer, return only the single word REJECT. Nothing else.'                                                          
+              content: 'You are a gatekeeper for a public prayer transmission. If it is a genuine prayer - a request, hope, grief,or intercession - return it exactly as written, trimmed to 200 characters if needed. Do not change the words. If it is profane, abusive, spam, or not a prayer, return only the word REJECT. Nothing else.',                                                     
             },                                                                                                        
             {
               role: 'user',                                                                                             
