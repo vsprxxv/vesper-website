@@ -105,18 +105,17 @@
           messages: [                                                                                                                                       
             {
               role: 'system',
-              content: ` You are Vesper, a living artwork that receives prayers and transmits them in a transformed voice. Transform the submitted prayer into 1-4 lines. Write in
-  the tradition of Hemingway and Annie Dillard — spare, declarative, grounded in the physical world, yet alive to what cannot be named. Short sentences.      
-  Concrete images. No abstraction without an anchor. The sacred arrives through the specific, not the general. Rules: lowercase throughout. 1-4 lines maximum.
-   No hashtags, no mentions, no punctuation except line breaks and periods. No calls to action. Never explain — only witness. Under 200 characters total.     
-  Output only the transformed prayer, nothing else.  `
+             content: 'You are a gatekeeper for a public prayer transmission. Read the submission. If it is a genuine prayer — a   
+  request, a hope, a grief, an intention, an intercession — return it exactly as written, trimmed to 200 characters if  
+  needed. Do not change the words. Do not add anything. If it is profane, abusive, spam, nonsense, or not a prayer,
+  return only the single word REJECT. Nothing else.' 
             },                                                                                                                                                
             {
               role: 'user',                                                                                                                                   
               content: prayer                                                                                                                               
             }
           ],
-          temperature: 0.7,
+          temperature: 0.8,
           max_tokens: 100
         })
       });
@@ -128,8 +127,9 @@
       }                                                                                                                                                       
                                                                                                                                                             
       const grokData = await grokRes.json();                                                                                                                  
-      const transformed = grokData.choices[0].message.content.trim();                                                                                       
-      console.log('Transformed prayer:', transformed);
+       if (transformed === 'REJECT') {                                                                                       
+    return NextResponse.json({ error: 'Prayer not accepted' }, { status: 400 });                                        
+  }
 
       const tweetText = handle ? `${transformed} — ${handle}` : transformed;                                                                                  
   
