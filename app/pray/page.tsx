@@ -3,9 +3,10 @@
 import { useState } from 'react'
 
 export default function PrayPage() {
-  const [prayer, setPrayer] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [txSignature, setTxSignature] = useState<string | null>(null)
+   const [prayer, setPrayer] = useState('')                                                                              
+  const [submitted, setSubmitted] = useState(false)                                                                   
+  const [rejected, setRejected] = useState(false)
+  const [txSignature, setTxSignature] = useState<string | null>(null)  
 
   const handleSubmit = async () => {
     if (!prayer.trim()) return
@@ -23,7 +24,8 @@ export default function PrayPage() {
         setTxSignature(data.txSignature || null)
         setSubmitted(true)
       } else {
-        alert('Something went wrong. Please try again.')
+          alert('Something went wrong. Please try again.')                                                              
+        }
       }
     } catch (err) {
       alert('Something went wrong. Please try again.')
@@ -42,7 +44,31 @@ export default function PrayPage() {
           Send your prayer into the stream. The current will take it. Water will give it form, and the chain will remember. What vanishes will stay written there, quiet and shining.
         </p>
 
-        {!submitted ? (
+                                                                                                                      
+          {rejected ? (                                                                                               
+            <div style={{ textAlign: 'center', padding: '48px 0' }}>
+              <p style={{ color: '#9ca3af', fontSize: '15px', lineHeight: '1.9' }}>                                     
+                This could not be received. Please offer a prayer.
+              </p>                                                                                                      
+              <button                                                                                                   
+                onClick={() => { setPrayer(''); setRejected(false) }}
+                style={{                                                                                                
+                  marginTop: '24px',                                                                                  
+                  padding: '12px 32px',                                                                                 
+                  backgroundColor: 'transparent',
+                  color: '#9ca3af',                                                                                     
+                  border: '1px solid #e5e7eb',                                                                        
+                  borderRadius: '4px',                                                                                  
+                  fontSize: '13px',
+                  letterSpacing: '2px',                                                                                 
+                  cursor: 'pointer',                                                                                  
+                  fontFamily: 'Helvetica, Arial, sans-serif'                                                            
+                }}
+              >                                                                                                         
+                TRY AGAIN                                                                                             
+              </button>                                                                                                 
+            </div>
+          ) : !submitted ? (    
           <div>
             <textarea
               value={prayer}
