@@ -97,7 +97,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'API key missing' }, { status: 500 });
     }
 
-    // Transform with Grok
+    // Gate with Grok — filter or pass through unchanged
     const grokRes = await fetch('https://api.x.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -109,14 +109,14 @@ export async function POST(request: Request) {
         messages: [
           {
             role: 'system',
-            content: 'Transform this prayer into spare, luminous prose in the style of Hemingway and Annie Dillard combined. Short sentences. Remove desperation. Add grace and wonder. Keep it under 200 characters. Output only the transformed prayer, nothing else.'
+            content: 'You are a gatekeeper for a public prayer transmission. Read the submission. If it is a genuine prayer — a request, a hope, a grief, an intention, an intercession — return it exactly as written, trimmed to 200 characters if needed. Do not change the words. Do not add anything. If it is profane, abusive, spam, nonsense, or not a prayer, return only the single word REJECT. Nothing else.'
           },
           {
             role: 'user',
             content: prayer
           }
         ],
-        temperature: 0.7,
+        temperature: 0,
         max_tokens: 100
       })
     });
@@ -129,7 +129,11 @@ export async function POST(request: Request) {
 
     const grokData = await grokRes.json();
     const transformed = grokData.choices[0].message.content.trim();
-    console.log('Transformed prayer:', transformed);
+    console.log('Grok output:', transformed);
+
+    if (transformed === 'REJECT') {
+      return NextResponse.json({ error: 'Prayer not accepted' }, { status: 400 });
+    }
 
     const tweetText = handle ? `${transformed} — ${handle}` : transformed;
 
