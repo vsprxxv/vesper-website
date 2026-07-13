@@ -1,6 +1,6 @@
  import { NextResponse } from 'next/server';
-  import { createHmac } from 'crypto';                                                                                  
-  import { Connection, Keypair, Transaction, TransactionInstruction, PublicKey } from '@solana/web3.js';                
+  import { createHmac } from 'crypto';
+  import { Connection, Keypair, Transaction, TransactionInstruction, PublicKey, sendAndConfirmTransaction } from '@solana/web3.js';
   import bs58 from 'bs58';                                                                                              
                                                                                                                         
   const MEMO_PROGRAM_ID = new PublicKey('MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr');                                 
@@ -25,8 +25,8 @@
       tx.recentBlockhash = blockhash;                                                                                 
       tx.feePayer = keypair.publicKey;
       tx.sign(keypair);                                                                                                 
-      const sig = await connection.sendRawTransaction(tx.serialize());
-      console.log('On-chain:', sig);                                                                                    
+      const sig = await sendAndConfirmTransaction(connection, tx, [keypair]);
+      console.log('On-chain:', sig);
       return sig;                                                                                                       
     } catch (err) {
       console.error('Solana error:', err);                                                                              
@@ -148,20 +148,23 @@ If you can find no want beneath the words — if it is only attack, noise, or sp
       }                                                                                                               
                                                                                                                         
       const tweetText = handle ? `${transformed} — ${handle}` : transformed;
-                                                                                                                        
-      const [twitterRes, txSignature] = await Promise.all([                                                           
-        postToTwitter(tweetText),
-        recordOnChain(transformed),
-      ]);                                                                                                               
-  
-      if (!twitterRes.ok) {                                                                                             
-        const twitterError = await twitterRes.text();                                                                 
+
+      // Chain write first — X post only if it succeeds
+      const txSignature = await recordOnChain(transformed);
+      if (!txSignature) {
+        console.error('Solana write failed — aborting X post to preserve atomicity');
+        return NextResponse.json({ error: 'Chain write failed' }, { status: 502 });
+      }
+
+      const twitterRes = await postToTwitter(tweetText);
+      if (!twitterRes.ok) {
+        const twitterError = await twitterRes.text();
         console.error('Twitter post failed:', twitterError);
       } else {
-        console.log('Posted to Twitter successfully!');                                                                 
+        console.log('Posted to Twitter successfully!');
       }
-                                                                                                                        
-      return NextResponse.json({                                                                                      
+
+      return NextResponse.json({
         success: true,
         transformedPrayer: transformed,
         txSignature,
